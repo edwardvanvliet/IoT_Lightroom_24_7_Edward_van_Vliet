@@ -1,12 +1,12 @@
 # IoT - Lightroom 24/7 - Arduino - Adafruit IO - Color Picker - Light Sensor - Manual - Edward van Vliet
 
-# Picking a color via the Color Picker (Block) on Adafruit IO using a LED-strip connected to a NODEMCU 1.0, by using Arduino IDE (2.0) software. A light sensor is also required to measure the brightness of the light coming from outside (to your window). Lastly we will connect our NodeMCU 1.0 to the internet by using a personal Hotspot Wi-Fi. You will need internet, because eventually, you'll have to use a Geolocation API (or an AmbientLightSensor API) in this manual.
+# Picking a color via the Color Picker (Block) on Adafruit IO using a LED-strip connected to a NODEMCU 1.0, by using Arduino IDE (2.0) software. In my concept a light sensor is required to measure the brightness of the light coming from outside (to your window). We do have to connect our NodeMCU 1.0 to the internet. Because when using the PRE-SET Mode (see UX Documentation), my LED-lights will need to know the date and time. That's why we will use a NTP Server to determine the date and time. For example, in Winter times, it gets dark earlier at night and then the next morning the sun will also rise up earlier. So the amount of light that is coming from outside also depends on what season it is.
 
 By Edward van Vliet - 500761369<br>
 Last updated 27 October 2022
 
 ## Introduction
-Using this manual you'll be able to pick a color via the Color Picker (Block) on Adafruit IO using a LED-strip connected to a NODEMCU 1.0, by using Arduino IDE (2.0) software. By using a light sensor, sticked to your window, you'll be able to measure the brightness of the incoming light (from outside). We will also connect our NodeMCU 1.0 to the internet, because eventually, you'll either have to use the NTP Client Library, or another Light Sensor API in this manual.
+Using this manual you'll be able to pick a color via the Color Picker (Block) on Adafruit IO using a LED-strip connected to a NODEMCU 1.0, by using Arduino IDE (2.0) software. In my concept a light sensor (sticked to your window) is required to measure the brightness/strength of the incoming light. So, by using a light sensor (sticked to or at your window), you'll be able to measure the brightness of the incoming light from outside, the natural light. We'll also need to connect our NodeMCU 1.0 to the internet. Because when using the PRE-SET Mode (see UX Documentation), my LED-lights will need to know the date and time. That's why we will use a NTP Server to determine the date and time. For example, in Winter times, it gets dark earlier at night and then the next morning the sun will also rise up earlier. So the amount of light that is coming from outside also depends on what season it is. We will also connect our NodeMCU 1.0 to the internet, because eventually, you'll either have to use the NTP Client Library, or another Light Sensor API in this manual.
 
 ## Required hardware components
   - 1x Node MCU 1.0
@@ -31,7 +31,7 @@ For the LED-strip to properly function, we will first need to install the requir
 2. Here you search for "Adafruit IO Arduino". Watch out because sometimes the right one is not the one that pops up first.
 3. Find the right one and click "Install" and then "Install All".
 
-### Step 3: Setting up Adafruit IO
+### Step 4: Setting up Adafruit IO
 
 1. Go to https://io.adafruit.com/, click on "Get started for free" and make your account.
 2. When your account is ready, click on "IO" in the navigation menu at the top of the page.
@@ -39,7 +39,7 @@ For the LED-strip to properly function, we will first need to install the requir
 ![Image of your key and username in Adafruit IO](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/01_ADAFRUIT_IO_KEY_USERNAME.png)
 4. Copy your key and remember your username for later use.
 
-### Step 4: Creating Adafruit IO Feed and Color Picker
+### Step 5: Creating Adafruit IO Feed and Color Picker
 
 In Adafruit IO:
 1. Go to Dashboards > New Dashboard, give it a name and create dashboard.
@@ -55,7 +55,7 @@ In Adafruit IO:
 ![Image of your chosen color in Adafruit IO](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/06_Color_chosen_gold.png)
 
 
-### Step 5: Adjust your code
+### Step 6: Adjust your code
 
 In Arduino IDE:
 1. Go to File > Examples > Adafruit IO Arduino > Adafruitio_14_neopixel.
@@ -86,7 +86,7 @@ In Arduino IDE:
 ![Image of PIN and PIXEL_COUNT in code in Arduino IDE](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/10_Set_PIXEL_PIN_5_to_PIXEL_PIN_D5.png)
 
 
-### Step 6: Upload your code
+### Step 7: Upload your code
 
 1. First, you could verify the code by clicking on the (when hovering on it - white) button with the check mark icon on it. When you click on it, the button will turn yellow, this means Arduino IDE is verifying/compiling the sketch as you can see below. You can also see what is happening on the right bottom corner: "Compiling sketch..."
 
@@ -108,7 +108,7 @@ In Arduino IDE:
 
 As you can see, my mobile hotspot is successfully connected to the device (ESP-296609).
 
-### Step 7: Test your code
+### Step 8: Test your code
 
 Change the color, by using the Color Picker on Adafruit IO. You could also use your mobile phone to change the color, try it out! Then you should see your LED-strip change to your chosen color.<br>
 
