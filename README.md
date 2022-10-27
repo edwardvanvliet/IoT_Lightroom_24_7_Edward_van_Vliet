@@ -266,7 +266,7 @@ And if the clock turns 8 (AM), your LED-strip will turn into dark blue (night).
 [Image of Serial Monitor NTP Client](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/03_Serial_Monitor_NTP_Gelukt.png)
 
 
-## Step 9: Storyboard Case of Herman in reality
+## Step 10: Storyboard Case of Herman in reality
 Imagine being my persona Herman, a hardworking office worker, but he often works at home, working graveyard-shifts for most of the time. 
 So for example, Herman's graveyard-shift starts at 11 PM (= 23) at night, so the LED's will have to turn into a bright daylight color.
 Herman sleeps after his shift around 9 AM (= 9), so he'll need to sleep by then. So then, from 9 AM the lights need to dim a bit, into a darker blue (night) color.
@@ -321,10 +321,7 @@ Apparently according to [this article post about ESP WiFi problems](https://ardu
 
 ![Image of mobile hotspot WiFi connected](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/14_Device_is_connected_to_my_hotspot.png)
 
-So then I tried connecting the ESP-296609 to my mobile hotspot WiFi, on my smartphone. And fortunately, it worked as you can see below!
-In the Serial Monitor you should see all the colors (their HEX color codes) you have picked below one another, by using the color picker, either on your computer or mobile (smart)phone.
-
-![Image of successful connection in Serial Monitor](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/18_Successfully_connected.png)
+So then I tried connecting the ESP-296609 to my mobile hotspot WiFi, on my smartphone. And fortunately, it worked!
 
 
 ## Error 2: Missing Bracket
