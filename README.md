@@ -23,7 +23,7 @@ Leftmost pin to `3v3` (red wire)<br>
 Second pin to `GND` (black wire)<br>
 Right pin to `D5` (yellow wire)<br>
 
-![Image of requirements](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/00_Required_Hardware_Components_20221010_125042_HDR.jpg)
+![Image of requirements](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/00_Required_Hardware_Components_20221010_125042_HDR.jpg)
 
 
 ## Step 2: Installing the required libraries from Adafruit IO in Arduino IDE
@@ -42,6 +42,8 @@ For the NTP Server you'll need to install the following library, called ["NTP Cl
 1. Go to your Library Manager once again, on the left.
 2. Here you search for "NTP Client". Watch out because sometimes the right one is not the one that pops up first.
 3. Find the right one (by Fabrice Weinberg), choose the latest version "NTP Client by Fabrice Weinberg (V.3.2.1.)" and click "Install".
+
+[Image of NTP Client Installed](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/02_NTP_Client_Library_Installed.png)
 
 
 ## Step 4: Copy the code and use your own WiFi (using an own Mobile Hotspot Wi-Fi is recommended, avoid 5GHz connection)
@@ -171,7 +173,7 @@ If the clock is at 8 (AM) you will get the following line on your serial monitor
 1. Go to https://io.adafruit.com/, click on "Get started for free" and make your account.
 2. When your account is ready, click on "IO" in the navigation menu at the top of the page.
 3. Click on the button with the yellow key icon.
-![Image of your key and username in Adafruit IO](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/01_ADAFRUIT_IO_KEY_USERNAME.png)
+![Image of your key and username in Adafruit IO](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/01_ADAFRUIT_IO_KEY_USERNAME.png)
 4. Copy your key and remember your username for later use.
 
 
@@ -261,7 +263,7 @@ And if the clock turns 8 (AM), your LED-strip will turn into dark blue (night).
 
 ## Step 9: Uploading your code will give you the following image in your Serial Monitor
 
-[Image of Serial Monitor NTP Client]()
+[Image of Serial Monitor NTP Client](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/03_Serial_Monitor_NTP_Gelukt.png)
 
 
 ## Step 9: Storyboard Case of Herman in reality
@@ -307,7 +309,7 @@ In my case the problem was the WiFi connection.
 Because at first, I tried using my 5GHz (Home) WiFi throughout this whole process.
 Unfortunately the Serial Monitor kept presenting me dots...
 
-![Image of the connection error dots in the Serial Monitor](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/17_Connection_Error_dots.png)
+![Image of the connection error dots in the Serial Monitor](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/17_Connection_Error_dots.png)
 
 The dots that are appearing every 1/2 a second on your Serial Monitor means that your hardware, in this case the NodeMCU 1.0, can't properly connect to a WiFi network.
 That's why it is highly recommended to use an own mobile hotspot, PREVENT using a 5GHz WiFi or hotspot! (According to [this source](https://arduino.stackexchange.com/questions/49370/esp8266-not-connecting-to-wifi) on Arduino Stack Exchange.)
@@ -317,18 +319,18 @@ Seeing the dots keep coming up on my Serial Monitor, I directly knew there was s
 And then I searched about this connection error, and I found out I was not the only one with this problem.
 Apparently according to [this article post about ESP WiFi problems](https://arduino.stackexchange.com/questions/49370/esp8266-not-connecting-to-wifi), the ESP(-296609) is not able to connect with 5Ghz WiFi.
 
-![Image of mobile hotspot WiFi connected](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/14_Device_is_connected_to_my_hotspot.png)
+![Image of mobile hotspot WiFi connected](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/14_Device_is_connected_to_my_hotspot.png)
 
 So then I tried connecting the ESP-296609 to my mobile hotspot WiFi, on my smartphone. And fortunately, it worked as you can see below!
 In the Serial Monitor you should see all the colors (their HEX color codes) you have picked below one another, by using the color picker, either on your computer or mobile (smart)phone.
 
-![Image of successful connection in Serial Monitor](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/18_Successfully_connected.png)
+![Image of successful connection in Serial Monitor](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/18_Successfully_connected.png)
 
 
 ## Error 2: Missing Bracket
 Sometimes when you work too fast, you'll get the following error your Serial Monitor, it means that there's a bracket missing on a certain line.
 
-![Image of bracket error]()
+![Image of bracket error](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/05_Bracket_Error.png)
 
 But luckily you can read exactly where you are missing a bracket, so you don't have to search through your code.
 (What can be quite frustrating when you have a huge file of code.)
