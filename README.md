@@ -24,12 +24,18 @@ Right pin to `D5` (yellow wire)<br>
 
 ![Image of requirements](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/00_Required_Hardware_Components_20221010_125042_HDR.jpg)
 
-## Step 2: Installing the required libraries in Arduino IDE
+## Step 2: Installing the required libraries from Adafruit IO in Arduino IDE
 For the LED-strip to properly function, we will first need to install the required libraries in the [Arduino IDE](https://www.arduino.cc/en/main/software). We can do this by going to the 'Sketch' dropdown menu, selecting 'Include Library' and then clicking on 'Manage Libraries'.<br>
 
 1. Go to the libraries tab that is the third button on the left. If your IDE verion is lower than 2.0, you can find this in Sketch > Include library > Manage libraries.
 2. Here you search for "Adafruit IO Arduino". Watch out because sometimes the right one is not the one that pops up first.
 3. Find the right one and click "Install" and then "Install All".
+
+## Step 3: Installing the required libraries for the NTP Server
+For the NTP Server you'll need to install the following library, called:
+- NTP Client by Fabrice Weinberg
+
+
 
 ### Step 4: Setting up Adafruit IO
 
