@@ -25,6 +25,7 @@ Right pin to `D5` (yellow wire)<br>
 
 ![Image of requirements](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/00_Required_Hardware_Components_20221010_125042_HDR.jpg)
 
+
 ## Step 2: Installing the required libraries from Adafruit IO in Arduino IDE
 
 For the LED-strip to properly function, we will first need to install the required libraries in the [Arduino IDE](https://www.arduino.cc/en/main/software). We can do this by going to the 'Sketch' dropdown menu, selecting 'Include Library' and then clicking on 'Manage Libraries'.<br>
@@ -32,6 +33,7 @@ For the LED-strip to properly function, we will first need to install the requir
 1. Go to the libraries tab that is the third button on the left. If your IDE verion is lower than 2.0, you can find this in Sketch > Include library > Manage libraries.
 2. Here you search for "Adafruit IO Arduino". Watch out because sometimes the right one is not the one that pops up first.
 3. Find the right one and click "Install" and then "Install All".
+
 
 ## Step 3: Installing the required libraries for the NTP Server
 
@@ -41,10 +43,130 @@ For the NTP Server you'll need to install the following library, called ["NTP Cl
 2. Here you search for "NTP Client". Watch out because sometimes the right one is not the one that pops up first.
 3. Find the right one (by Fabrice Weinberg), choose the latest version "NTP Client by Fabrice Weinberg (V.3.2.1.)" and click "Install".
 
-### Step 5: Setting up Adafruit IO
+
+## Step 4: Copy the code and use your own WiFi (using an own Mobile Hotspot Wi-Fi is recommended, avoid 5GHz connection)
+
+~~~
+#include <NTPClient.h>
+// change next line to use with another board/shield
+#include <ESP8266WiFi.h>
+//#include <WiFi.h> // for WiFi shield
+//#include <WiFi101.h> // for WiFi 101 shield or MKR1000
+#include <WiFiUdp.h>
+
+// Replace with your network credentials
+const char *SSID     = "REPLACE_WITH_YOUR_SSID";
+const char *PASSWORD = "REPLACE_WITH_YOUR_PASSWORD";
+
+// Define NTP Client to get time
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org");
+
+//Week Days
+String weekDays[7]={"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+
+//Month names
+String months[12]={"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
+void setup() {
+  // Initialize Serial Monitor
+  Serial.begin(115200);
+  
+  // Connect to Wi-Fi
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+// Initialize a NTPClient to get time
+  timeClient.begin();
+  // Set offset time in seconds to adjust for your timezone, for example:
+  // GMT +1 = 3600
+  // GMT +8 = 28800
+  // GMT -1 = -3600
+  // GMT 0 = 0
+    timeClient.setTimeOffset(7200);
+}
+
+void loop() {
+  timeClient.update();
+
+  time_t epochTime = timeClient.getEpochTime();
+  Serial.print("Epoch Time: ");
+  Serial.println(epochTime);
+  
+  String formattedTime = timeClient.getFormattedTime();
+  Serial.print("Formatted Time: ");
+  Serial.println(formattedTime);  
+
+  int currentHour = timeClient.getHours();
+  Serial.print("Hour: ");
+  Serial.println(currentHour);  
+
+  int currentMinute = timeClient.getMinutes();
+  Serial.print("Minutes: ");
+  Serial.println(currentMinute); 
+   
+  int currentSecond = timeClient.getSeconds();
+  Serial.print("Seconds: ");
+  Serial.println(currentSecond);  
+
+  String weekDay = weekDays[timeClient.getDay()];
+  Serial.print("Week Day: ");
+  Serial.println(weekDay);    
+
+  //Get a time structure
+  struct tm *ptm = gmtime ((time_t *)&epochTime); 
+
+  int monthDay = ptm->tm_mday;
+  Serial.print("Month day: ");
+  Serial.println(monthDay);
+
+  int currentMonth = ptm->tm_mon+1;
+  Serial.print("Month: ");
+  Serial.println(currentMonth);
+
+  String currentMonthName = months[currentMonth-1];
+  Serial.print("Month name: ");
+  Serial.println(currentMonthName);
+
+  int currentYear = ptm->tm_year+1900;
+  Serial.print("Year: ");
+  Serial.println(currentYear);
+
+  //Print complete date:
+  String currentDate = String(currentYear) + "-" + String(currentMonth) + "-" + String(monthDay);
+  Serial.print("Current date: ");
+  Serial.println(currentDate);
+
+  Serial.println("");
+
+  delay(2000);
+}
+~~~
 
 
-### Step 5: Setting up Adafruit IO
+## Step 5: If-Else Statement
+Add an IF-ELSE Statement, as stated below. 
+Make sure that the following code is added at the end, but (important) inside the void loop!
+
+~~~
+if (currentHour == 8) {
+    Serial.println("Hello, it is 8");
+    }
+// do stuff if the condition is true
+else{
+    Serial.println("Hello it's not 8");
+    }
+~~~
+
+If the clock is at 8 (AM) you will get the following line on your serial monitor “Hello, it is 8”. If that's not the case, you will get the message “Hello, it's not 8”. The two (==), is also essential. It [means](https://www.arduino.cc/reference/en/language/structure/comparison-operators/equalto/) that it is true if currentHour is equal to 8 and it is false if currentHour is not equal to 8 (in this case).
+
+
+## Step 6: Setting up Adafruit IO
 
 1. Go to https://io.adafruit.com/, click on "Get started for free" and make your account.
 2. When your account is ready, click on "IO" in the navigation menu at the top of the page.
@@ -52,89 +174,132 @@ For the NTP Server you'll need to install the following library, called ["NTP Cl
 ![Image of your key and username in Adafruit IO](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/01_ADAFRUIT_IO_KEY_USERNAME.png)
 4. Copy your key and remember your username for later use.
 
-### Step 5: Creating Adafruit IO Feed and Color Picker
 
-In Adafruit IO:
-1. Go to Dashboards > New Dashboard, give it a name and create dashboard.
-![Image of dashboard tab in Adafruit IO](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/02_Tab_DASHBOARDS.png)
-2. Go to your newly made dashboard.
-3. Create block using the settings button.
-![Image of new block in Adafruit IO](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/03_Create_a_new_block_Color_Picker.png)
-4. Choose "Colorpicker", and give it the feed name: "color"
-![Image of feed name "color" in Adafruit IO](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/04_Create_Feed_name_color.png)
-5. Create block.
-6. Choose a color with your colorpicker.
-![Image of how to choose a color in Adafruit IO](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/05_Choose_your_color_gold.png)<br>
-![Image of your chosen color in Adafruit IO](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/06_Color_chosen_gold.png)
+## Step 7: Implementing elements of Adafruit Neopixels' Library code with your NTP Client code, adjust your code
+
+Step 7 is implementing/adding the right elements of Adafruit Neopixels' Library code to your current NTP Client Code.
+Copy the following code between the library’s and the Wi-Fi settings, in your NTP Client code.
+
+~~~
+#include <Adafruit_NeoPixel.h>
+#ifdef __AVR__
+ #include <avr/power.h> // Required for 16 MHz Adafruit Trinket
+#endif
+
+// Which pin on the Arduino is connected to the NeoPixels?
+#define PIN        6 // On Trinket or Gemma, suggest changing this to 1
+
+// How many NeoPixels are attached to the Arduino?
+#define NUMPIXELS 18 // Popular NeoPixel ring size
+
+// When setting up the NeoPixel library, we tell it how many pixels,
+// and which pin to use to send signals. Note that for older NeoPixel
+// strips you might need to change the third parameter -- see the
+// strandtest example for more information on possible values.
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+#define DELAYVAL 500 // Time (in milliseconds) to pause between pixels
+~~~
+Don't forget to change the the pin into D5 and change the number om NUMPIXELS into the amount of your ledstrip.
+<br>
+Put the next type of code on the lower side of the void loop.
+~~~
+void loop() {
+  pixels.clear(); // Set all pixel colors to 'off'
+
+  // The first NeoPixel in a strand is #0, second is 1, all the way up
+  // to the count of pixels minus one.
+  for(int i=0; i<NUMPIXELS; i++) { // For every pixel
+
+    // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
+    // Here we're using a moderately bright green color:
+    pixels.setPixelColor(i, pixels.Color(0, 150, 0));
+
+    pixels.show();   // Send the updated pixel colors to the hardware
+
+    delay(DELAYVAL); // Pause before next pass through loop
+  }
+}
+~~~
 
 
-### Step 6: Adjust your code
+## Step 8: Adjust your IF-ELSE Statement in the NTP Client code
 
-In Arduino IDE:
-1. Go to File > Examples > Adafruit IO Arduino > Adafruitio_14_neopixel.
-![Image of Adafruitio_14_neopixexl file in Arduino IDE](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/07_Arduino_Examples_Adafruit_IO_Arduino_Adafruitio_14_neopixel.png)
-2. Then click on the tab "config.h" in Arduino IDE, fill in your username and key like the example below.
+One of the last steps is making the IF-ELSE Statement complete (as below):
 
-```
-#define IO_USERNAME "YOUR USERNAME HERE"
-#define IO_KEY "YOUR KEY HERE"
-```
-![Image of config.h tab open in Arduino IDE](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/08_Arduino_config.h_opens.png)
+~~~
+if (currentHour == 8) {
+    Serial.println("Hello, it is 8");
+  for(int i=0; i<NUMPIXELS; i++) { // For every pixel
 
-3. Below that, you can fill in your WiFi SSID and Password.
-(Advice: Use your phone's hotspot to prevent router problems, so you can use it everywhere. Also prevent using a 5GHz WiFi if possible.)<br>
+    // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
+    // Dark blue night color:
+        pixels.setPixelColor(i, pixels.Color((123, 132, 255));
 
-```
-#define WIFI_SSID "YOUR NETWORK NAME HERE"
-#define WIFI_PASS "YOUR PASSWORD HERE"
-```
-![Image of WIFI_SSID and WIFI_PASS in code in Arduino IDE](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/09_Enter_IO_USERNAME_IO_KEY_WIFI_SSID_and_WIFI_PASS.png)
+    pixels.show();   // Send the updated pixel colors to the hardware
+    delay(DELAYVAL); // Pause before next pass through loop
+  }
+}
+else {
+    Serial.println("Hello it's not 8");
+  for(int i=0; i<NUMPIXELS; i++) {
 
-4. Change the PIN to "D5" and PIXEL_COUNT to the amount of lights your ledstrip have, like the example below.
+    // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
+    // Bright daylight blue color:
+    pixels.setPixelColor(i, pixels.Color((0, 229, 255));
 
-```
-#define PIXEL_PIN     D5
-#define PIXEL_COUNT   18
-```
-![Image of PIN and PIXEL_COUNT in code in Arduino IDE](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/10_Set_PIXEL_PIN_5_to_PIXEL_PIN_D5.png)
+    pixels.show();   // Send the updated pixel colors to the hardware
+
+    delay(DELAYVAL); // Pause before next pass through loop
+  }
+}
+~~~
+
+If you upload the code, it will give your LED-strip a light blue (day)light color.
+And if the clock turns 8 (AM), your LED-strip will turn into dark blue (night). 
 
 
-### Step 7: Upload your code
+## Step 9: Uploading your code will give you the following image in your Serial Monitor
 
-1. First, you could verify the code by clicking on the (when hovering on it - white) button with the check mark icon on it. When you click on it, the button will turn yellow, this means Arduino IDE is verifying/compiling the sketch as you can see below. You can also see what is happening on the right bottom corner: "Compiling sketch..."
+[Image of Serial Monitor NTP Client]()
 
-![Image of compiling sketch by verifying in Arduino IDE](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/11_VERIFY_Compiling_sketch.png)
 
-2. Upload your code by clicking on the button with the arrow icon on the top left of your screen, right next to the check mark icon button (used for verifying).
+## Step 9: Storyboard Case of Herman in reality
+Imagine being my persona Herman, a hardworking office worker, but he often works at home, working graveyard-shifts for most of the time. 
+So for example, Herman's graveyard-shift starts at 11 PM (= 23) at night, so the LED's will have to turn into a bright daylight color.
+Herman sleeps after his shift around 9 AM (= 9), so he'll need to sleep by then. So then, from 9 AM the lights need to dim a bit, into a darker blue (night) color.
+This was my solution in the following code:
 
-3. Activate the "Serial Monitor" with the magnifying glass button on the top right. Open the "Serial Monitor" on the bottom of your screen.
+~~~
+if (currentHour > 23){
+    Serial.println("It’s time to work Herman!");
+  for(int i=0; i<NUMPIXELS; i++) { // For each pixel
 
-![Image of opening the Serial Monitor in Arduino IDE](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/12_Activate_Open_the_Serial_Monitor.png)
+    // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
+    // Bright daylight blue color to keep Herman sharp for work:
+        pixels.setPixelColor(i, pixels.Color(0, 229, 225));
 
-4. Change the baud rate in the Serial Monitor to 115200 baud.
+    pixels.show();   // Send the updated pixel colors to the hardware
 
-![Image of changing baud rate to 115200 baud in Arduino IDE](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/13_Set_to_115200_baud.png)
+    delay(DELAYVAL); // Pause before next pass through loop
+  }
+}
+else {
+    Serial.println("It’s bedtime for you Herman.");
+  for(int i=0; i<NUMPIXELS; i++) {
 
-5. If everything worked as planned, you will see that you're connected in the Serial Monitor. If not, try to use your mobile Hotspot WiFi, that worked for me, as you can see below.
+    // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
+    // Dark blue night color, so Herman can sleep like a baby:
+        pixels.setPixelColor(i, pixels.Color(123, 132, 255));
+    pixels.show();   // Send the updated pixel colors to the hardware
 
-![Image of mobile hotspot WiFi connected](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/14_Device_is_connected_to_my_hotspot.png)
+    delay(DELAYVAL); // Pause before next pass through loop
+    }
+  ~~~
+<br>
 
-As you can see, my mobile hotspot is successfully connected to the device (ESP-296609).
-
-### Step 8: Test your code
-
-Change the color, by using the Color Picker on Adafruit IO. You could also use your mobile phone to change the color, try it out! Then you should see your LED-strip change to your chosen color.<br>
-
-In the Serial Monitor you can see all the colors (their HEX color codes) you have picked below one another, by using the color picker on your computer:
-
-![Image of colors picked on your laptop or computer](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/15_All_the_colors_you_have_used_stated_in_the_Serial_Monitor.png)
-
-It should also work by using the same color picker on your phone, you should see the same colors (the HEX color codes) you have picked on your phone on your Serial Monitor:
-
-![Image of colors picked on your mobile (smart)phone](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/16_All_colors_you_have_used_on_mobile_stated_in_the_Serial_Monitor.png)<br>
 
 ## Possible Errors:
-
 
 ## Error 1: Connection Error
 If you keep seeing dots coming up on your Serial Monitor, it means something is wrong with the connection of your NodeMCU 1.0.
@@ -157,4 +322,18 @@ Apparently according to [this article post about ESP WiFi problems](https://ardu
 So then I tried connecting the ESP-296609 to my mobile hotspot WiFi, on my smartphone. And fortunately, it worked as you can see below!
 In the Serial Monitor you should see all the colors (their HEX color codes) you have picked below one another, by using the color picker, either on your computer or mobile (smart)phone.
 
-![Image of successful connection in Serial Monitor](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/18_Successfully_connected.png)<br>
+![Image of successful connection in Serial Monitor](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/18_Successfully_connected.png)
+
+
+## Error 2: Missing Bracket
+Sometimes when you work too fast, you'll get the following error your Serial Monitor, it means that there's a bracket missing on a certain line.
+
+![Image of bracket error]()
+
+But luckily you can read exactly where you are missing a bracket, so you don't have to search through your code.
+(What can be quite frustrating when you have a huge file of code.)
+
+## Solution to Error 2: Missing Bracket
+
+Just simply add the bracket where it belongs. You should find it quite fast, because Arduino highlights the line red for you, that's where the error occurred.
+
