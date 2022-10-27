@@ -147,9 +147,3 @@ So then I tried connecting the ESP-296609 to my mobile hotspot WiFi, on my smart
 In the Serial Monitor you should see all the colors (their HEX color codes) you have picked below one another, by using the color picker, either on your computer or mobile (smart)phone.
 
 ![Image of successful connection in Serial Monitor](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/18_Successfully_connected.png)<br>
-
-## Final result:
-
-Link to [YouTube video](https://youtu.be/vnDPWwgaO7w):
-
-[![Image of thumbnail final result](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/Thumbnail_Final_Result_Video_2022_10_12_133953.png)](https://youtu.be/vnDPWwgaO7w "Kleur LED-strip veranderen m.b.v. Color Picker in Adafruit IO")
