@@ -16,6 +16,7 @@ Using this manual you'll be able to pick a color via the Color Picker (Block) on
   
   
 ## Step 1: Connecting the Node MCU 1.0 to your laptop, and connect your LED-strip to the Node MCU 1.0
+
 The first thing we want to do is connect our Node MCU to your laptop, using an USB-C to USB-B microcable. Then, we want to connect our LED-strip to the Node MCU, using Jumber Wires glued at the other end of the LED-strip. The image below shows which wires need to be connected to which pins on the board.
 
 Leftmost pin to `3v3` (red wire)<br>
@@ -25,6 +26,7 @@ Right pin to `D5` (yellow wire)<br>
 ![Image of requirements](https://github.com/edwardvanvliet/IoT_AdafruitIOArduino_ColorPicker_Manual_Edward_van_Vliet/blob/main/images/00_Required_Hardware_Components_20221010_125042_HDR.jpg)
 
 ## Step 2: Installing the required libraries from Adafruit IO in Arduino IDE
+
 For the LED-strip to properly function, we will first need to install the required libraries in the [Arduino IDE](https://www.arduino.cc/en/main/software). We can do this by going to the 'Sketch' dropdown menu, selecting 'Include Library' and then clicking on 'Manage Libraries'.<br>
 
 1. Go to the libraries tab that is the third button on the left. If your IDE verion is lower than 2.0, you can find this in Sketch > Include library > Manage libraries.
@@ -32,12 +34,17 @@ For the LED-strip to properly function, we will first need to install the requir
 3. Find the right one and click "Install" and then "Install All".
 
 ## Step 3: Installing the required libraries for the NTP Server
-For the NTP Server you'll need to install the following library, called:
-- NTP Client by Fabrice Weinberg
+
+For the NTP Server you'll need to install the following library, called ["NTP Client"](https://randomnerdtutorials.com/esp8266-nodemcu-date-time-ntp-client-server-arduino/):
+
+1. Go to your Library Manager once again, on the left.
+2. Here you search for "NTP Client". Watch out because sometimes the right one is not the one that pops up first.
+3. Find the right one (by Fabrice Weinberg), choose the latest version "NTP Client by Fabrice Weinberg (V.3.2.1.)" and click "Install".
+
+### Step 5: Setting up Adafruit IO
 
 
-
-### Step 4: Setting up Adafruit IO
+### Step 5: Setting up Adafruit IO
 
 1. Go to https://io.adafruit.com/, click on "Get started for free" and make your account.
 2. When your account is ready, click on "IO" in the navigation menu at the top of the page.
