@@ -6,14 +6,12 @@ By Edward van Vliet - 500761369<br>
 Last updated 27 October 2022
 
 ## Introduction
-Using this manual you'll be able to pick a color via the Color Picker (Block) on Adafruit IO using a LED-strip connected to a NODEMCU 1.0, by using Arduino IDE (2.0) software. By using a light sensor, sticked to your window, you'll be able to measure the brightness of the incoming light (from outside). Lastly we will connect our NodeMCU 1.0 to the internet, because eventually, you'll either have to use the Geolocation API, or the AmbientLightSensor API in this manual.
+Using this manual you'll be able to pick a color via the Color Picker (Block) on Adafruit IO using a LED-strip connected to a NODEMCU 1.0, by using Arduino IDE (2.0) software. By using a light sensor, sticked to your window, you'll be able to measure the brightness of the incoming light (from outside). We will also connect our NodeMCU 1.0 to the internet, because eventually, you'll either have to use the NTP Client Library, or another Light Sensor API in this manual.
 
 ## Required hardware components
   - 1x Node MCU 1.0
   - 1x LED-strip
   - 3x Jumper Wires glued to the end of the LED-strip
-  - 1x Grove Light Sensor (v1.2)
-  - 3x Jumper Wires to connect the Light Sensor to your Node MCU 1.0
   - 1x USB-C to USB-B microcable (https://www.allekabels.nl/usb-c-kabel/11518/4080378/usb-c-naar-usb-b-micro-kabel.html?gclid=Cj0KCQjw1vSZBhDuARIsAKZlijQllk1tmEmzDAyOpEEB6p9cz1rm71ymovd92VNrhihNyiu-eR0gt8saAvW9EALw_wcB)
   
   
