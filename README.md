@@ -43,7 +43,7 @@ For the NTP Server you'll need to install the following library, called ["NTP Cl
 2. Here you search for "NTP Client". Watch out because sometimes the right one is not the one that pops up first.
 3. Find the right one (by Fabrice Weinberg), choose the latest version "NTP Client by Fabrice Weinberg (V.3.2.1.)" and click "Install".
 
-[Image of NTP Client Installed](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/02_NTP_Client_Library_Installed.png)
+![Image of NTP Client Installed](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/02_NTP_Client_Library_Installed.png)
 
 
 ## Step 4: Copy the code and use your own WiFi (using an own Mobile Hotspot Wi-Fi is recommended, avoid 5GHz connection)
@@ -263,7 +263,7 @@ And if the clock turns 8 (AM), your LED-strip will turn into dark blue (night).
 
 ## Step 9: Uploading your code will give you the following image in your Serial Monitor
 
-[Image of Serial Monitor NTP Client](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/03_Serial_Monitor_NTP_Gelukt.png)
+![Image of Serial Monitor NTP Client](https://github.com/edwardvanvliet/IoT_Lightroom_24_7_Edward_van_Vliet/blob/main/images/03_Serial_Monitor_NTP_Gelukt.png)
 
 
 ## Step 10: Storyboard Case of Herman in reality
